@@ -1,0 +1,169 @@
+<div *ngIf="showForm" class="overlay"></div>
+<div class="dasboard-container">
+  <app-sidebar
+    (pageSizeChanged)="onPageSizeChange($event)"
+    (descricaoChanged)="onDescricaoChange($event)"
+    (tipoChanged)="onTipoChange($event)"
+    (dateRangeChanged)="onDateRangeChange($event)"
+    (openForm)="openForm()"
+  ></app-sidebar>
+  <app-financa-form
+    *ngIf="showForm"
+    (formClosed)="closeForm()"
+    (financaCriada)="financaCriada()"
+    [financa]="financaParaEdicao"
+  ></app-financa-form>
+  <div class="table-container">
+    <div tuiHeader="h1">
+      <h1 tuiTitle>DashBoard</h1>
+    </div>
+    <div class="cards-container">
+      <div class="card entrada">
+        <h3>Entrada Total</h3>
+
+        <p>$ {{ entradaTotal | number : "1.2-2" }}</p>
+      </div>
+
+      <div class="card saida">
+        <h3>Saída Total</h3>
+
+        <p>$ {{ saidaTotal | number : "1.2-2" }}</p>
+      </div>
+
+      <div class="card total">
+        <h3>Valor Total</h3>
+
+        <p [ngClass]="{ entrada: valorTotal >= 0, saida: valorTotal < 0 }">
+          $ {{ valorTotal | number : "1.2-2" }}
+        </p>
+      </div>
+    </div>
+    <table
+      mat-table
+      [dataSource]="financas"
+      class="mat-elevation-z8"
+      responsive
+    >
+      <ng-container matColumnDef="descricao">
+        <th mat-header-cell *matHeaderCellDef>Descrição</th>
+        <td mat-cell class="descricao-column" *matCellDef="let financa">
+          {{ financa.descricao }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="valor">
+        <th mat-header-cell *matHeaderCellDef>Valor</th>
+        <td
+          class="default-column"
+          mat-cell
+          *matCellDef="let financa"
+          [ngClass]="{
+            entrada: financa.tipo === 'entrada',
+            saida: financa.tipo === 'saida'
+          }"
+        >
+          {{ financa.valor | number : "1.2-2" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tipo" class="tipo-column">
+        <th mat-header-cell *matHeaderCellDef>Tipo</th>
+        <td
+          class="default-column"
+          mat-cell
+          *matCellDef="let financa"
+          [ngClass]="{
+            'entrada-icon': financa.tipo === 'entrada',
+            'saida-icon': financa.tipo === 'saida'
+          }"
+        >
+          <mat-icon>
+            {{
+              financa.tipo === "entrada"
+                ? "arrow_circle_up"
+                : "arrow_circle_down"
+            }}
+          </mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="data">
+        <th mat-header-cell *matHeaderCellDef>Data</th>
+        <td class="default-column" mat-cell *matCellDef="let financa">
+          {{ formatDate(financa.data) }}
+        </td>
+      </ng-container>
+
+      <ng-container class="acoes" matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td class="default-column" mat-cell *matCellDef="let financa">
+          <div class="actions-controll">
+            <mat-icon (click)="onEditForm(financa)" class="edit">edit</mat-icon>
+            <mat-icon (click)="deleteFinanca(financa.id)" class="delete"
+              >delete</mat-icon
+            >
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <div class="table-mobile" *ngIf="isMobile">
+      <div class="mobile-card" *ngFor="let financa of financas">
+        <div class="mobile-row">
+          <strong>Descrição:</strong> <span>{{ financa.descricao }}</span>
+        </div>
+        <div class="mobile-row">
+          <strong>Valor:</strong>
+          <span
+            [ngClass]="{
+              entrada: financa.tipo === 'entrada',
+              saida: financa.tipo === 'saida'
+            }"
+          >
+            {{ financa.valor | number : "1.2-2" }}
+          </span>
+        </div>
+        <div
+          [ngClass]="{
+            'entrada-icon': financa.tipo === 'entrada',
+            'saida-icon': financa.tipo === 'saida'
+          }"
+          class="mobile-row"
+        >
+          <strong>Tipo:</strong>
+          <span>
+            <mat-icon>
+              {{
+                financa.tipo === "entrada"
+                  ? "arrow_circle_up"
+                  : "arrow_circle_down"
+              }}
+            </mat-icon>
+          </span>
+        </div>
+        <div class="mobile-row">
+          <strong>Data:</strong> <span>{{ formatDate(financa.data) }}</span>
+        </div>
+        <div class="mobile-row actions-controll">
+          <mat-icon (click)="onEditForm(financa)" class="edit">edit</mat-icon>
+          <mat-icon (click)="deleteFinanca(financa.id)" class="delete"
+            >delete</mat-icon
+          >
+        </div>
+      </div>
+    </div>
+    <mat-paginator
+      class="pageControll"
+      [length]="totalRegistros"
+      [pageSize]="itensPorPagina"
+      [hidePageSize]="true"
+      showFirstLastButtons
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+.form-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 10000;
+  background-color: #1e1e1e;
+  box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.example-right-align {
+  text-align: right;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.divControll {
+  display: flex;
+  gap: 1rem;
+}
+
+.saveBtn {
+  background-color: #28a745;
+  color: #fff;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.saveBtn:hover {
+  background-color: #218838;
+}
+
+.cancelBtn {
+  background-color: #dc3545;
+  color: #fff;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.cancelBtn:hover {
+  background-color: #c82333;
+}
+
+.editBtn {
+  background-color: #ffb347;
+  color: #fff;
+}

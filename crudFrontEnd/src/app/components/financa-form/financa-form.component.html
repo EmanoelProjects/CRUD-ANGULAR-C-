@@ -1,0 +1,77 @@
+<div class="form-container">
+  <h2>{{ editando ? "Editar Finança" : "Adicionar Finança" }}</h2>
+  <div>
+    <form [formGroup]="financaForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Descrição</mat-label>
+        <input matInput formControlName="descricao" required />
+        <mat-error *ngIf="financaForm.get('descricao')?.hasError('required')">
+          O campo descrição é obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>Valor</mat-label>
+        <input
+          class="example-right-align"
+          matInput
+          type="text"
+          formControlName="valor"
+          placeholder="0"
+          mask="separator.2"
+          thousandSeparator="."
+          decimalMarker=","
+        />
+        <span matTextPrefix>$&nbsp;</span>
+        <mat-error *ngIf="financaForm.get('valor')?.hasError('required')">
+          O campo valor é obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="pointer">
+        <mat-label>Data</mat-label>
+        <input
+          class="pointer"
+          matInput
+          [matDatepicker]="picker"
+          formControlName="data"
+          required
+          readonly
+          (focus)="picker.open()"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="financaForm.get('data')?.hasError('required')">
+          O campo data é obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-label>Tipo</mat-label>
+      <mat-radio-group formControlName="tipo" class="radio-group">
+        <mat-radio-button value="entrada">Entrada</mat-radio-button>
+        <mat-radio-button value="saida">Saída</mat-radio-button>
+      </mat-radio-group>
+      <mat-error *ngIf="financaForm.get('tipo')?.hasError('required')">
+        Selecione um tipo (Entrada ou Saída).
+      </mat-error>
+    </form>
+  </div>
+
+  <div class="button-group">
+    <button *ngIf="editando" mat-button class="editBtn" (click)="edit()">
+      Editar
+    </button>
+    <button
+      *ngIf="!editando"
+      mat-raised-button
+      class="saveBtn"
+      (click)="onSubmit()"
+    >
+      Salvar
+    </button>
+    <button mat-button class="cancelBtn" (click)="onCancel()">Cancelar</button>
+  </div>
+</div>

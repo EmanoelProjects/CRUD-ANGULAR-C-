@@ -1,0 +1,40 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background-color: #1e1e1e;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-family: "Arial", sans-serif;
+  gap: 1rem;
+  max-width: 400px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+}
+
+.mat-input-element {
+  padding: 5px;
+  font-size: 14px;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2 {
+  margin-bottom: 1rem;
+}
+
+.div-control {
+  display: flex;
+  gap: 1rem;
+}
+
+.date-input {
+  cursor: pointer;
+}

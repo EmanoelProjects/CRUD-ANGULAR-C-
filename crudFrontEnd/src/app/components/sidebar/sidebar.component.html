@@ -1,0 +1,74 @@
+<div class="sidebar">
+  <h1 tuiTitle>Controle de Finanças</h1>
+  <div class="filters">
+    <mat-form-field appearance="fill">
+      <mat-label>Filtrar por descrição</mat-label>
+      <input
+        matInput
+        [(ngModel)]="descricaoFiltro"
+        (ngModelChange)="onDescricaoChange()"
+      />
+    </mat-form-field>
+
+    <div class="div-control">
+      <mat-form-field class="filtroTipo" appearance="fill">
+        <mat-label>Filtrar por tipo</mat-label>
+        <mat-select [(value)]="tipoFiltro" (selectionChange)="onTipoChange()">
+          <mat-option value="">Todos</mat-option>
+          <mat-option value="Entrada">Entrada</mat-option>
+          <mat-option value="Saida">Saída</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Itens por página</mat-label>
+        <mat-select
+          [(value)]="itensPorPagina"
+          (selectionChange)="onPageSizeChange($event.value)"
+        >
+          <mat-option *ngFor="let option of pageSizeOptions" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <mat-label>Filtrar por Data</mat-label>
+      <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+        <input
+          matStartDate
+          formControlName="start"
+          placeholder="Data inicial"
+          readonly
+          (focus)="picker.open()"
+          class="date-input"
+        />
+        <input
+          matEndDate
+          formControlName="end"
+          placeholder="Data final"
+          readonly
+          (focus)="picker.open()"
+          class="date-input"
+        />
+      </mat-date-range-input>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-date-range-picker #picker>
+        <mat-date-range-picker-actions>
+          <button mat-button matDateRangePickerCancel (click)="onCancelDate()">
+            Limpar
+          </button>
+          <button mat-raised-button matDateRangePickerApply>Aplicar</button>
+        </mat-date-range-picker-actions>
+      </mat-date-range-picker>
+    </mat-form-field>
+    <button (click)="openFormm()" mat-button>
+      Adicionar Finança<mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <!-- Seletor de itens por página -->
+</div>
