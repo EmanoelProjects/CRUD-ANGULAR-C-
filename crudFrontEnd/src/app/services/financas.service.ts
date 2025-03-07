@@ -8,7 +8,7 @@ import { Financa } from '../interfaces/Financa.interface';
 })
 export class FinancasService {
   private http = inject(HttpClient);
-  private _baseUrl = 'http://localhost:5044/';
+  private _baseUrl = 'http://localhost:5044';
   constructor() {}
 
   getFinancas(): Observable<Financa[]> {
