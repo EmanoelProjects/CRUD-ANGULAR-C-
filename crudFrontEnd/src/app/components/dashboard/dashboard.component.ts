@@ -103,10 +103,6 @@ export class DashboardComponent {
 
         this.paginator.pageIndex = this.paginaAtual;
       });
-
-    this.financaService.getFinancas().subscribe((result) => {
-      this.financasSemFiltro = result;
-    });
   }
 
   formatDate(date: string | Date): string {
